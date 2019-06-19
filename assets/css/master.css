@@ -3,3 +3,10 @@ body {
   width: 100%;
   font-family: 'Inconsolata', monospace;
 }
+
+.img-bg {
+  background-image:  url('../img/wood-bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 70vh;
+}
