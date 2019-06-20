@@ -8,7 +8,7 @@ body {
   background-image:  url('../img/wood-bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  height: 70vh;
+  height: 550px;
   box-shadow: 0px 0px 15px 2px black;
   border-radius: 0.5rem;
 }
@@ -35,4 +35,70 @@ body {
   -ms-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   font-weight: 400;
+}
+
+.receipe-wrapper {
+  margin-top: 70px;
+}
+
+.receipe-row {
+  color: rgb(255, 255, 255);
+  font-size: 1.8rem;
+  line-height: 62px;
+}
+
+@media (min-width: 1200px) {
+  .receipe-wrapper {
+    margin-top: 80px;
+  }
+
+  .receipe-row {
+    line-height: 74px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .receipe-row {
+    line-height: 60px;
+    font-size: 1.6rem;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 765px) {
+  .receipe-wrapper {
+    margin-top: 90px;
+  }
+
+  .receipe-row {
+    line-height: 88px;
+  }
+
+  .img-bg {
+    height: 80vh;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 575px) {
+  .receipe-wrapper {
+    margin-top: 15vw;
+  }
+
+  .receipe-row {
+    line-height: 16vw;
+  }
+}
+
+@media (max-width: 400px) {
+  .receipe-row {
+    line-height: 16vw;
+    font-size: 1.5rem;
+  }
+
+  .receipe-wrapper {
+    margin-top: 18%
+  }
+
+  .img-bg {
+    height: 400px;
+  }
 }
