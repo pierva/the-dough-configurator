@@ -1,7 +1,23 @@
 var model = {
+  length: 0,
+  elements: [],
+  salt: 3,
+  motherYeast: 3,
+  freshYeast: 0.03,
+  dryYeast: 0.01,
+  oil: 1
+}
+
+var octopus = {
+  // connection between model and view
+  init: function() {
+
+  },
+
   // For local storage use
-  // setItem, getItem, removeItem, key, length
+  // setItem, getItem, removeItem, key, length, Storage.clear()
   // ex. localStorage.setItem('color', 'red')
+
 
   // function taken from MDN docs. It checks if local or session storage is
   // available
@@ -28,13 +44,38 @@ var model = {
             // acknowledge QuotaExceededError only if there's something already stored
             (storage && storage.length !== 0);
     }
-  }
-}
+  },
 
-var octopus = {
-  // connection between model and view
-  init: function() {
+  getObjectProperties: function() {
+    var inputs = $('.input, .checkbox-input');
+    var properties = [];
+    $.each(inputs, function(index, elem) {
+      var obj = {}
+      obj.name = elem.name;
+      if (elem.type === 'checkbox'){
+        obj.value = elem.checked;
+      } else {
+        obj.value = elem.value;
+      }
+      // obj[elem.name] = elem.value;
+      properties.push(obj);
+    });
+    model.length = properties.length;
+    model.elements = properties;
+    return properties;
+  },
 
+  getSettings: function() {
+    // Use this function to get previous settings from localStorage
+
+    // Check if there is something in the storage
+    if (localStorage.length > 0) {
+
+    }
+  },
+
+  populateStorage: function() {
+    // Use this function to save settings in local storage
   }
 
 }
@@ -53,6 +94,6 @@ var receipeView = {
 
 
 $(document).ready(function () {
-  views.init();
+  receipeView.init();
   new WOW().init();
 });
