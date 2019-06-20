@@ -11,7 +11,8 @@
     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&display=swap"
       rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/css/master.css">
+      <link rel="stylesheet" href="assets/css/master.css">
+    <link rel="stylesheet" href="assets/css/switch.css">
   </head>
   <body>
     <div class="container mt-5">
@@ -21,7 +22,7 @@
           <h3 class="text-center mb-3">Settings</h3>
           <form class="" action="index.html" method="post">
             <div class="form-group row">
-              <label for="balls_total col-form-label" class="col-6">Pizza for</label>
+              <label for="balls_total col-form-label" class="col-6">Total # of pizzas</label>
               <div class="col-6">
                 <input class="form-control" type="number" name="balls_total" min='1'>
               </div>
@@ -58,10 +59,10 @@
                 Olive Oil
               </label>
               <div class="col-6">
-                <select class="form-control">
-                  <option value="oil_yes">Yes</option>
-                  <option value="oil_no">No</option>
-                  </select>
+                <label class="switch">
+                  <input type="checkbox" name="oil">
+                  <span class="slider slider-success round"></span>
+                </label>
               </div>
             </div>
           </form>
