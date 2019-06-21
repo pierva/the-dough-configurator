@@ -1,11 +1,12 @@
 var model = {
-  length: 0,
   elements: [],
-  salt: 3,
-  motherYeast: 3,
-  freshYeast: 0.03,
-  dryYeast: 0.01,
-  oil: 1
+  default_salt: 3,
+  default_motherYeast: 3,
+  default_freshYeast: 0.03,
+  default_dryYeast: 0.01,
+  default_oil: 1,
+  default_allowance: true,
+  default_allowance_quantity: 20
 }
 
 var octopus = {
@@ -60,7 +61,6 @@ var octopus = {
       // obj[elem.name] = elem.value;
       properties.push(obj);
     });
-    model.length = properties.length;
     model.elements = properties;
     return properties;
   },

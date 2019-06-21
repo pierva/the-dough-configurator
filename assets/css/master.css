@@ -4,6 +4,10 @@ body {
   font-family: 'Inconsolata', monospace;
 }
 
+.header-margin {
+  margin-bottom: 10%;
+}
+
 .img-bg {
   background-image:  url('../img/wood-bg.jpg');
   background-repeat: no-repeat;
@@ -35,6 +39,11 @@ body {
   -ms-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   font-weight: 400;
+}
+
+.inline-element {
+  position: absolute;
+  top: 7px;
 }
 
 .receipe-wrapper {

@@ -15,22 +15,24 @@
     <link rel="stylesheet" href="assets/css/switch.css">
   </head>
   <body>
-    <div class="container mt-5">
-      <h1 class="text-center mb-5">The Pizza Dough Configurator</h1>
+    <div class="container mt-5 mb-5">
+      <h1 class="text-center header-margin">The Pizza Dough Configurator</h1>
       <div class="row">
         <div class="col-md-6 mb-3">
           <h3 class="text-center mb-3">Settings</h3>
           <form class="" action="index.html" method="post">
             <div class="form-group row">
-              <label for="balls_total col-form-label" class="col-6">Total # of pizzas</label>
+              <label for="balls_total" class="col-6 col-form-label">Total pizzas (#)</label>
               <div class="col-6">
-                <input class="input" type="number" name="balls_total" min='1'>
+                <input class="input" type="number" name="balls_total"
+                  min='1' required>
               </div>
             </div>
             <div class="form-group row">
               <label for="balls_weight" class="col-6 col-form-label">Balls weight (gr)</label>
               <div class="col-6">
-                <input class="input" type="number" name="balls_weight" min='10'>
+                <input class="input" type="number" name="balls_weight"
+                  min='10' required>
               </div>
             </div>
             <div class="form-group row">
@@ -39,7 +41,7 @@
               </label>
               <div class="col-6">
                 <input class="input" type="number" name="hydration"
-                  min='40' max='100'>
+                  min='40' max='100' required>
               </div>
             </div>
             <div class="form-group row">
@@ -55,14 +57,45 @@
               </div>
             </div>
             <div class="form-group row">
+              <label for="salt" class="col-6 col-form-label">
+                Salt (%)
+              </label>
+              <div class="col-6">
+                <input class="input" type="number" name="salt"
+                  min='0' max='10' value="3" required>
+              </div>
+            </div>
+            <div class="form-group row">
               <label for="oil" class="col-6 col-form-label">
                 Olive Oil
               </label>
-              <div class="col-6">
+              <div class="col-3">
                 <label class="switch">
                   <input class="checkbox-input" type="checkbox" name="oil">
                   <span class="slider slider-success round"></span>
                 </label>
+              </div>
+              <div class="col-3">
+                <span class="inline-element">%</span>
+                <input type="number" name="oil_quantity" value="1" min="1"
+                  max="60" class="input">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="allowance" class="col-6 col-form-label">
+                Allowance
+              </label>
+              <div class="col-3">
+                <label class="switch">
+                  <input class="checkbox-input" type="checkbox"
+                    name="allowance" checked>
+                  <span class="slider slider-success round"></span>
+                </label>
+              </div>
+              <div class="col-3">
+                <span class="inline-element">gr</span>
+                <input type="number" name="allowance_quantity" value="20"
+                  min="0" class="input">
               </div>
             </div>
           </form>
@@ -86,7 +119,7 @@
               <span class="ingredient-quantity">30gr</span>
             </div>
             <div class="receipe-row row">
-              <span class="col-8">Oil:</span>
+              <span class="col-8">Oil (EVOO):</span>
               <span class="ingredient-quantity">10gr</span>
             </div>
           </div>
