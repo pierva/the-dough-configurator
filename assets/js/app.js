@@ -47,6 +47,51 @@ var octopus = {
     }
   },
 
+  updateModelElements: function(elements) {
+    model.elements = elements;
+  },
+
+  getSavedSettings: function() {
+    // This function gets the saved settings from localStorage
+
+    if (localStorage.length > 0) {
+      var keys = receipeView.getObjectProperties();
+      var elements = $.map(keys, function(elem) {
+        var savedValue = localStorage.getItem(elem.name);
+        if (savedValue) {
+          elem.value = savedValue;
+          receipeView.updateSetting(elem);
+          return elem;
+        }
+      });
+      model.elements = elements;
+      return elements;
+    }
+  },
+
+  populateStorage: function() {
+    // Clear all values previously saved
+    localStorage.clear();
+
+    try {
+      var elements = receipeView.getObjectProperties();
+      $.each(elements, function(index, elem){
+        localStorage.setItem(elem.name, elem.value);
+      });
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
+
+}
+
+var receipeView = {
+  init: function() {
+    this.render()
+  },
+
   getObjectProperties: function() {
     var inputs = $('.input, .checkbox-input');
     var properties = [];
@@ -58,31 +103,14 @@ var octopus = {
       } else {
         obj.value = elem.value;
       }
-      // obj[elem.name] = elem.value;
       properties.push(obj);
     });
-    model.elements = properties;
+    octopus.updateModelElements(properties);
     return properties;
   },
 
-  getSettings: function() {
-    // Use this function to get previous settings from localStorage
+  updateSetting: function(elem) {
 
-    // Check if there is something in the storage
-    if (localStorage.length > 0) {
-
-    }
-  },
-
-  populateStorage: function() {
-    // Use this function to save settings in local storage
-  }
-
-}
-
-var receipeView = {
-  init: function() {
-    this.render()
   },
 
   render: function() {
