@@ -113,6 +113,12 @@ var receipeView = {
   },
 
   updateSetting: function(elem) {
+    var domElement = $("[name='" + elem.name + "']");
+    if (domElement.is(':checkbox')) {
+      domElement.prop('checked', elem.value);
+    } else {
+      $("[name='" + elem.name + "']").val(elem.value);
+    }
   },
 
   render: function() {
