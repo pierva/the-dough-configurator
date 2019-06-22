@@ -1,5 +1,5 @@
 var model = {
-  elements: [],
+  elements: {},
   default_salt: 3,
   default_motherYeast: 3,
   default_freshYeast: 0.03,
@@ -12,7 +12,7 @@ var model = {
 var octopus = {
   // connection between model and view
   init: function() {
-
+    receipeView.render();
   },
 
   // For local storage use
@@ -64,6 +64,10 @@ var octopus = {
           return elem;
         }
       });
+      if (elements.length > 0) {
+        // Add warning to the user that a receipe has been found
+        console.log('We found some settings');
+      }
       model.elements = elements;
       return elements;
     }
@@ -91,45 +95,57 @@ var octopus = {
 }
 
 var receipeView = {
-  init: function() {
-    this.render()
-  },
 
   getObjectProperties: function() {
-    var inputs = $('.input, .checkbox-input');
+    var $inputs = $('.input, .checkbox-input');
     var properties = [];
-    $.each(inputs, function(index, elem) {
-      var obj = {}
+    var elements = {};
+    $.each($inputs, function(index, elem) {
+      var obj = {};
       obj.name = elem.name;
       if (elem.type === 'checkbox'){
         obj.value = elem.checked;
+        elements[elem.name] = elem.checked;
       } else {
         obj.value = elem.value;
+        elements[elem.name] = elem.value;
       }
       properties.push(obj);
     });
-    octopus.updateModelElements(properties);
+    octopus.updateModelElements(elements);
     return properties;
   },
 
   updateSetting: function(elem) {
-    var domElement = $("[name='" + elem.name + "']");
-    if (domElement.is(':checkbox')) {
-      domElement.prop('checked', elem.value);
+    var $domInput = $("[name='" + elem.name + "']");
+    if ($domInput.is(':checkbox')) {
+      $domInput.prop('checked', elem.value);
     } else {
       $("[name='" + elem.name + "']").val(elem.value);
     }
   },
 
-  render: function() {
-    // Get elements from cookies/local storage
+  calculate: function(elements) {
+    if (true) {
 
-    // Render the receipe
+    }
+  },
+
+  render: function() {
+
+    // Add event listener on the submit button
+    $('#settings-form').submit(function(event) {
+      event.preventDefault();
+    });
+
+    //Get saved settins and update the DOM
+    octopus.getSavedSettings();
+    this.calculate(model.elements);
   }
 }
 
 
 $(document).ready(function () {
-  receipeView.init();
+  octopus.init();
   new WOW().init();
 });
