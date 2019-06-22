@@ -70,15 +70,18 @@ var octopus = {
   },
 
   populateStorage: function() {
-    // Clear all values previously saved
-    localStorage.clear();
-
     try {
-      var elements = receipeView.getObjectProperties();
-      $.each(elements, function(index, elem){
-        localStorage.setItem(elem.name, elem.value);
-      });
-      return true;
+      // Clear all values previously saved
+      localStorage.clear();
+
+      //Check if localStorage is available
+      if (this.storageAvailable("localStorage")) {
+        var elements = receipeView.getObjectProperties();
+        $.each(elements, function(index, elem){
+          localStorage.setItem(elem.name, elem.value);
+        });
+        return true;
+      }
     } catch (e) {
       console.log(e);
       return false;
@@ -110,7 +113,6 @@ var receipeView = {
   },
 
   updateSetting: function(elem) {
-
   },
 
   render: function() {
