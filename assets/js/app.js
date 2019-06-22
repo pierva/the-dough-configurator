@@ -102,16 +102,17 @@ var octopus = {
       }
       return elements;
     }
+    return false;
   },
 
-  populateStorage: function() {
+  populateStorage: function(elements) {
+    // elements is the result of getObjectProperties and it is an array of objs
     try {
       // Clear all values previously saved
       localStorage.clear();
 
       //Check if localStorage is available
       if (this.storageAvailable("localStorage")) {
-        var elements = settingsView.getObjectProperties();
         $.each(elements, function(index, elem){
           localStorage.setItem(elem.name, elem.value);
         });
@@ -147,6 +148,7 @@ var settingsView = {
       settingsView.getObjectProperties();
       var receipe = settingsView.calculateReceipe(octopus.getModelElements());
       receipeView.render(receipe);
+      octopus.populateStorage();
     });
     this.render();
   },
@@ -221,9 +223,11 @@ var settingsView = {
   render: function() {
 
     //Get saved settins and update the DOM
-    octopus.getSavedSettings();
-    var receipe = this.calculateReceipe(octopus.getModelElements());
-    receipeView.render(receipe);
+    var settingsAvailable = octopus.getSavedSettings();
+    if (settingsAvailable) {
+      var receipe = this.calculateReceipe(octopus.getModelElements());
+      receipeView.render(receipe);
+    }
   }
 }
 
@@ -232,11 +236,13 @@ var receipeView = {
     var $row, $span1, $span2;
     var $receipeWrapper = $('.receipe-wrapper');
     $receipeWrapper.empty();
-    $receipeWrapper.append(
-      '<span class="receipe-header col-12">(' +
+    if (!$.isEmptyObject(receipe)) {
+      $receipeWrapper.append(
+        '<span class="receipe-header col-12">(' +
         receipe.balls_total + ' x ' + receipe.balls_weight + ' / ' +
-        'Tot.' + receipe.total_weight + 'gr)</span>'
+        'Tot. ' + receipe.total_weight + 'gr)</span>'
       );
+    };
     for (var key in receipe){
       if(key!=='balls_total' && key!=='balls_weight' && key!=='total_weight'){
         if (key === 'total_flour'){
