@@ -1,12 +1,34 @@
 var model = {
-  elements: {},
-  default_salt: 3,
-  default_motherYeast: 3,
-  default_freshYeast: 0.03,
-  default_dryYeast: 0.01,
-  default_oil: 1,
-  default_allowance: true,
-  default_allowance_quantity: 20
+  "elements": {},
+  "default_settings": [
+    {
+      "name": "yeast_type",
+      "value": "motherYeast"
+    },
+    {
+      "name": "salt",
+      "value": 3
+    },
+    {
+      "name": "oil",
+      "value": false
+    },
+    {
+      "name": "oil_quantity",
+      "value": 1
+    },
+    {
+      "name": "allowance",
+      "value": true
+    },
+    {
+      "name": "allowance_quantity",
+      "value": 20
+    },
+  ],
+  "default_motherYeast": 3,
+  "default_freshYeast": 0.03,
+  "default_dryYeast": 0.01,
 }
 
 var octopus = {
@@ -48,6 +70,10 @@ var octopus = {
 
   getModelElements: function() {
     return model.elements;
+  },
+
+  getDefaultSettings: function() {
+    return model.default_settings;
   },
 
   updateModelElements: function(elements) {
@@ -150,6 +176,10 @@ var settingsView = {
       receipeView.render(receipe);
       octopus.populateStorage(elements);
     });
+
+    $('#default').click(function(event) {
+      settingsView.restoreDefaultSettings();
+    })
     this.render();
   },
 
@@ -180,6 +210,13 @@ var settingsView = {
     } else {
       $("[name='" + elem.name + "']").val(elem.value);
     }
+  },
+
+  restoreDefaultSettings: function() {
+    var elements = octopus.getDefaultSettings();
+    $.each(elements, function(index, elem) {
+      settingsView.updateSetting(elem);
+    });
   },
 
   calculateReceipe: function(elems) {
@@ -221,7 +258,6 @@ var settingsView = {
   },
 
   render: function() {
-
     //Get saved settins and update the DOM
     var settingsAvailable = octopus.getSavedSettings();
     if (settingsAvailable) {
@@ -230,6 +266,7 @@ var settingsView = {
     }
   }
 }
+
 
 var receipeView = {
   render: function(receipe) {
