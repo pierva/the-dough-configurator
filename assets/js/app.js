@@ -19,7 +19,6 @@ var octopus = {
   // setItem, getItem, removeItem, key, length, Storage.clear()
   // ex. localStorage.setItem('color', 'red')
 
-
   // function taken from MDN docs. It checks if local or session storage is
   // available
   storageAvailable: function(type) {
@@ -49,6 +48,15 @@ var octopus = {
 
   updateModelElements: function(elements) {
     model.elements = elements;
+  },
+
+  setIngredientPercentage: function(key){
+    if (key in model.elements) {
+      if (model.elements[key] === ""){
+        model.elements[key] = 0;
+        return 0;
+      } else return parseInt(model.elements[key]);
+    } else return 0;
   },
 
   getSavedSettings: function() {
@@ -104,8 +112,7 @@ var octopus = {
         return model.default_dryYeast;
         break;
     }
-  },
-
+  }
 }
 
 var receipeView = {
@@ -141,17 +148,17 @@ var receipeView = {
 
   calculateReceipe: function(elems) {
     var totalPercent = 100;
-    if (elems.balls_total && elems.balls_weight && elems.hydration) {
+    var results = {};
+    if (elems.balls_total !== "" && elems.balls_weight !== "" &&
+        elems.hydration !== "") {
       totalPercent += parseInt(elems.hydration);
       totalPercent += octopus.getYeastPercentage(elems.yeast_type);
-      if (elems.salt){
-        totalPercent += parseInt(elems.salt);
-      }
       if(elems.oil && elems.oil_quantity){
         totalPercent += parseInt(elems.oil_quantity);
       }
     }
-    return totalPercent;
+    results.total_percent = totalPercent;
+    return results;
   },
 
   render: function() {
