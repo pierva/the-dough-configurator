@@ -74,6 +74,22 @@ body {
   margin: 5% 0;
 }
 
+.ingredient-flour {
+  position: absolute;
+  bottom: 0px;
+  width: 40%;
+  opacity: 0.8;
+  left: 25px;
+}
+
+.ingredient-basil {
+  position: absolute;
+  bottom: -15px;
+  width: 20%;
+  opacity: 0.8;
+  right: 0px;
+}
+
 @media (min-width: 1200px) {
   .receipe-wrapper {
     margin-top: 80px;
