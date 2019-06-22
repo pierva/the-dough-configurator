@@ -145,10 +145,10 @@ var settingsView = {
     // Add event listener on the submit button
     $('#settings-form').submit(function(event) {
       event.preventDefault();
-      settingsView.getObjectProperties();
+      var elements = settingsView.getObjectProperties();
       var receipe = settingsView.calculateReceipe(octopus.getModelElements());
       receipeView.render(receipe);
-      octopus.populateStorage();
+      octopus.populateStorage(elements);
     });
     this.render();
   },
@@ -246,9 +246,10 @@ var receipeView = {
     for (var key in receipe){
       if(key!=='balls_total' && key!=='balls_weight' && key!=='total_weight'){
         if (key === 'total_flour'){
-          $span1 = $('<span class="col-8"></span>').text('Total Flour');
+          $span1 = $('<span class="col-8 text-capitalize"></span>')
+                      .text('Total Flour');
         } else {
-          $span1 = $('<span class="col-8"></span>').text(key);
+          $span1 = $('<span class="col-8 text-capitalize"></span>').text(key);
         }
         $row = $('<div class="receipe-row row"></div>');
         $span2 = $('<span class="ingredient-quantity"></span>')

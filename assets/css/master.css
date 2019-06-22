@@ -63,7 +63,6 @@ body {
   color: rgb(255, 255, 255);
   font-size: 1.8rem;
   line-height: 62px;
-  text-transform: capitalize;
 }
 
 @media (min-width: 1200px) {
