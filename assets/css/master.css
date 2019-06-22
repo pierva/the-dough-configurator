@@ -50,10 +50,20 @@ body {
   margin-top: 70px;
 }
 
+.receipe-header {
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: 5px;
+  left: 0;
+  font-weight: 1.1rem;
+}
+
 .receipe-row {
   color: rgb(255, 255, 255);
   font-size: 1.8rem;
   line-height: 62px;
+  text-transform: capitalize;
 }
 
 @media (min-width: 1200px) {

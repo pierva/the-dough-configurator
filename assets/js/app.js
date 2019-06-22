@@ -228,13 +228,24 @@ var receipeView = {
     var $row, $span1, $span2;
     var $receipeWrapper = $('.receipe-wrapper');
     $receipeWrapper.empty();
+    $receipeWrapper.append(
+      '<span class="receipe-header col-12">(' +
+        receipe.balls_total + ' x ' + receipe.balls_weight + ' / ' +
+        'Tot.' + receipe.total_weight + 'gr)</span>'
+      );
     for (var key in receipe){
-      $row = $('<div class="receipe-row row"></div>');
-      $span1 = $('<span class="col-8"></span>').text(key);
-      $span2 = $('<span class="ingredient-quantity"></span>')
-                  .text(receipe[key] + ' gr');
-      $row.append($span1, $span2);
-      $receipeWrapper.append($row);
+      if(key!=='balls_total' && key!=='balls_weight' && key!=='total_weight'){
+        if (key === 'total_flour'){
+          $span1 = $('<span class="col-8"></span>').text('Total Flour');
+        } else {
+          $span1 = $('<span class="col-8"></span>').text(key);
+        }
+        $row = $('<div class="receipe-row row"></div>');
+        $span2 = $('<span class="ingredient-quantity"></span>')
+        .text(receipe[key] + ' gr');
+        $row.append($span1, $span2);
+        $receipeWrapper.append($row);
+      }
     }
   }
 };
