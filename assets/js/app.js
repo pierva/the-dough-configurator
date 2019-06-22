@@ -2,6 +2,18 @@ var model = {
   "elements": {},
   "default_settings": [
     {
+      "name": "balls_total",
+      "value": ""
+    },
+    {
+      "name": "balls_weight",
+      "value": ""
+    },
+    {
+      "name": "hydration",
+      "value": ""
+    },
+    {
       "name": "yeast_type",
       "value": "motherYeast"
     },
@@ -80,6 +92,10 @@ var octopus = {
     model.elements = elements;
   },
 
+  clearStorage: function(){
+    localStorage.clear();
+  },
+
   setIngredientPercentage: function(key) {
     if (key in model.elements) {
       if (model.elements[key] === ""){
@@ -122,10 +138,6 @@ var octopus = {
           return elem;
         }
       });
-      if (elements.length > 0) {
-        // Add warning to the user that a receipe has been found
-        console.log('We found some settings');
-      }
       return elements;
     }
     return false;
@@ -181,6 +193,7 @@ var settingsView = {
     $('#default').click(function(event) {
       settingsView.restoreDefaultSettings();
       settingsView.validator();
+      octopus.clearStorage();
     })
     this.render();
   },
