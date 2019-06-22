@@ -70,6 +70,10 @@ body {
   border-width: 2px;
 }
 
+.footer {
+  margin: 5% 0;
+}
+
 @media (min-width: 1200px) {
   .receipe-wrapper {
     margin-top: 80px;
