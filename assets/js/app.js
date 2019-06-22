@@ -59,6 +59,7 @@ var octopus = {
       var elements = $.map(keys, function(elem) {
         var savedValue = localStorage.getItem(elem.name);
         if (savedValue) {
+          model.elements[elem.name] = savedValue;
           elem.value = savedValue;
           receipeView.updateSetting(elem);
           return elem;
@@ -142,7 +143,7 @@ var receipeView = {
     var totalPercent = 100;
     if (elems.balls_total && elems.balls_weight && elems.hydration) {
       totalPercent += parseInt(elems.hydration);
-      totalPercent += octopus.getYeastPercentage(elem.yeast_type);
+      totalPercent += octopus.getYeastPercentage(elems.yeast_type);
       if (elems.salt){
         totalPercent += parseInt(elems.salt);
       }
@@ -162,7 +163,7 @@ var receipeView = {
 
     //Get saved settins and update the DOM
     octopus.getSavedSettings();
-    this.calculate(model.elements);
+    this.calculateReceipe(model.elements);
   }
 }
 
