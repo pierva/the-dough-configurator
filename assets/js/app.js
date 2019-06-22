@@ -12,7 +12,7 @@ var model = {
 var octopus = {
   // connection between model and view
   init: function() {
-    receipeView.render();
+    settingsView.render();
   },
 
   // For local storage use
@@ -46,6 +46,10 @@ var octopus = {
     }
   },
 
+  getModelElements: function() {
+    return model.elements;
+  },
+
   updateModelElements: function(elements) {
     model.elements = elements;
   },
@@ -77,7 +81,7 @@ var octopus = {
     // This function gets the saved settings from localStorage
 
     if (localStorage.length > 0) {
-      var keys = receipeView.getObjectProperties();
+      var keys = settingsView.getObjectProperties();
       var elements = $.map(keys, function(elem) {
         var savedValue = localStorage.getItem(elem.name);
         if (savedValue) {
@@ -88,7 +92,7 @@ var octopus = {
             model.elements[elem.name] = savedValue;
             elem.value = savedValue;
           }
-          receipeView.updateSetting(elem);
+          settingsView.updateSetting(elem);
           return elem;
         }
       });
@@ -107,7 +111,7 @@ var octopus = {
 
       //Check if localStorage is available
       if (this.storageAvailable("localStorage")) {
-        var elements = receipeView.getObjectProperties();
+        var elements = settingsView.getObjectProperties();
         $.each(elements, function(index, elem){
           localStorage.setItem(elem.name, elem.value);
         });
@@ -134,7 +138,7 @@ var octopus = {
   }
 }
 
-var receipeView = {
+var settingsView = {
 
   getObjectProperties: function() {
     var $inputs = $('.input, .checkbox-input');
@@ -170,6 +174,8 @@ var receipeView = {
     var results = {};
     if (elems.balls_total !== "" && elems.balls_weight !== "" &&
         elems.hydration !== "") {
+      results.balls_total = elems.balls_total;
+      results.balls_weight = elems.balls_weight;
       totalPercent += parseInt(elems.hydration);
       totalPercent += octopus.getYeastPercentage(elems.yeast_type);
       results.total_weight = parseInt(elems.balls_total) *
@@ -179,6 +185,7 @@ var receipeView = {
       }
       totalPercent += octopus.setIngredientPercentage('salt');
 
+      results.total_flour = Math.round(results.total_weight*100/totalPercent);
       // this must be last because we need the quantity in gr
       if(elems.oil){
         var oilPercent = octopus.setIngredientPercentage('oil_quantity');
@@ -186,10 +193,10 @@ var receipeView = {
                                              totalPercent);
       }
       // results
-      results.total_flour = Math.round(results.total_weight*100/totalPercent);
-      results.yeast = Math.round(results.total_weight *
-                                 octopus.getYeastPercentage(elems.yeast_type)/
-                                 totalPercent);
+
+      results.yeast = (results.total_weight *
+                       octopus.getYeastPercentage(elems.yeast_type)/
+                       totalPercent).toFixed(1);
       var tot_liquids = Math.round(results.total_weight *
                                        parseInt(elems.hydration) / totalPercent);
       results.water = elems.oil ? tot_liquids - results.oil : tot_liquids;
@@ -205,13 +212,32 @@ var receipeView = {
     // Add event listener on the submit button
     $('#settings-form').submit(function(event) {
       event.preventDefault();
+      settingsView.getObjectProperties();
+      var receipe = settingsView.calculateReceipe(octopus.getModelElements());
+      receipeView.render(receipe);
     });
 
     //Get saved settins and update the DOM
     octopus.getSavedSettings();
-    this.calculateReceipe(model.elements);
+    var receipe = this.calculateReceipe(octopus.getModelElements());
   }
 }
+
+var receipeView = {
+  render: function(receipe) {
+    var $row, $span1, $span2;
+    var $receipeWrapper = $('.receipe-wrapper');
+    $receipeWrapper.empty();
+    for (var key in receipe){
+      $row = $('<div class="receipe-row row"></div>');
+      $span1 = $('<span class="col-8"></span>').text(key);
+      $span2 = $('<span class="ingredient-quantity"></span>')
+                  .text(receipe[key] + ' gr');
+      $row.append($span1, $span2);
+      $receipeWrapper.append($row);
+    }
+  }
+};
 
 
 $(document).ready(function () {
