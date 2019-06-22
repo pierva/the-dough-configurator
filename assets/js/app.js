@@ -68,7 +68,6 @@ var octopus = {
         // Add warning to the user that a receipe has been found
         console.log('We found some settings');
       }
-      model.elements = elements;
       return elements;
     }
   },
@@ -90,7 +89,21 @@ var octopus = {
       console.log(e);
       return false;
     }
-  }
+  },
+
+  getYeastPercentage: function(type){
+    switch (type) {
+      case 'motherYeast':
+        return model.default_motherYeast;
+        break;
+      case 'freshYeast':
+        return model.default_freshYeast;
+        break;
+      case 'dryYeast':
+        return model.default_dryYeast;
+        break;
+    }
+  },
 
 }
 
@@ -125,10 +138,19 @@ var receipeView = {
     }
   },
 
-  calculate: function(elements) {
-    if (true) {
-
+  calculateReceipe: function(elems) {
+    var totalPercent = 100;
+    if (elems.balls_total && elems.balls_weight && elems.hydration) {
+      totalPercent += parseInt(elems.hydration);
+      totalPercent += octopus.getYeastPercentage(elem.yeast_type);
+      if (elems.salt){
+        totalPercent += parseInt(elems.salt);
+      }
+      if(elems.oil && elems.oil_quantity){
+        totalPercent += parseInt(elems.oil_quantity);
+      }
     }
+    return totalPercent;
   },
 
   render: function() {
