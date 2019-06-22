@@ -50,13 +50,27 @@ var octopus = {
     model.elements = elements;
   },
 
-  setIngredientPercentage: function(key){
+  setIngredientPercentage: function(key) {
     if (key in model.elements) {
       if (model.elements[key] === ""){
         model.elements[key] = 0;
         return 0;
       } else return parseInt(model.elements[key]);
     } else return 0;
+  },
+
+  castToBoolean: function(value){
+    if (value.toLowerCase() === 'true'){
+      return true;
+    } else if (value.toLowerCase() === 'false'){
+      return false;
+    } return false;
+  },
+
+  getIngredientPercentage: function(key) {
+    if (key in model.elements) {
+      return parseInt(model.elements[key]);
+    }
   },
 
   getSavedSettings: function() {
@@ -67,8 +81,13 @@ var octopus = {
       var elements = $.map(keys, function(elem) {
         var savedValue = localStorage.getItem(elem.name);
         if (savedValue) {
-          model.elements[elem.name] = savedValue;
-          elem.value = savedValue;
+          if (savedValue === 'true' || savedValue === 'false'){
+            model.elements[elem.name] = octopus.castToBoolean(savedValue);
+            elem.value = octopus.castToBoolean(savedValue);
+          } else {
+            model.elements[elem.name] = savedValue;
+            elem.value = savedValue;
+          }
           receipeView.updateSetting(elem);
           return elem;
         }
@@ -153,11 +172,31 @@ var receipeView = {
         elems.hydration !== "") {
       totalPercent += parseInt(elems.hydration);
       totalPercent += octopus.getYeastPercentage(elems.yeast_type);
-      if(elems.oil && elems.oil_quantity){
-        totalPercent += parseInt(elems.oil_quantity);
+      results.total_weight = parseInt(elems.balls_total) *
+                              parseInt(elems.balls_weight);
+      if (elems.allowance) {
+        results.total_weight += octopus.setIngredientPercentage('allowance_quantity');
       }
+      totalPercent += octopus.setIngredientPercentage('salt');
+
+      // this must be last because we need the quantity in gr
+      if(elems.oil){
+        var oilPercent = octopus.setIngredientPercentage('oil_quantity');
+        results.oil = Math.round(results.total_weight * oilPercent/
+                                             totalPercent);
+      }
+      // results
+      results.total_flour = Math.round(results.total_weight*100/totalPercent);
+      results.yeast = Math.round(results.total_weight *
+                                 octopus.getYeastPercentage(elems.yeast_type)/
+                                 totalPercent);
+      var tot_liquids = Math.round(results.total_weight *
+                                       parseInt(elems.hydration) / totalPercent);
+      results.water = elems.oil ? tot_liquids - results.oil : tot_liquids;
+      results.salt = Math.round(results.total_weight *
+                                octopus.getIngredientPercentage('salt') /
+                                totalPercent);
     }
-    results.total_percent = totalPercent;
     return results;
   },
 
