@@ -173,12 +173,14 @@ var settingsView = {
       event.preventDefault();
       var elements = settingsView.getObjectProperties();
       var receipe = settingsView.calculateReceipe(octopus.getModelElements());
+      settingsView.validator();
       receipeView.render(receipe);
       octopus.populateStorage(elements);
     });
 
     $('#default').click(function(event) {
       settingsView.restoreDefaultSettings();
+      settingsView.validator();
     })
     this.render();
   },
@@ -201,6 +203,29 @@ var settingsView = {
     });
     octopus.updateModelElements(elements);
     return properties;
+  },
+
+  validator: function(){
+    var valid;
+    $('.checkbox-input').each(function(){
+      var selector = $(this).prop('name') + '_quantity';
+      var quantitySpan = $("[name='" + selector + "']");
+      if ($(this).prop('checked')) {
+        if(quantitySpan.val() === "") {
+            quantitySpan.addClass('invalid');
+            valid = false;
+        } else {
+          quantitySpan.removeClass('invalid');
+          valid = false;
+        }
+        return;
+      }
+      // If it is not checked remove the invalid class
+      quantitySpan.removeClass('invalid');
+    });
+    if (valid){
+      $('.invalid').removeClass('invalid');
+    }
   },
 
   updateSetting: function(elem) {

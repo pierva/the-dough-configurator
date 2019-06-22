@@ -65,6 +65,11 @@ body {
   line-height: 62px;
 }
 
+.invalid {
+  border-color: red;
+  border-width: 2px;
+}
+
 @media (min-width: 1200px) {
   .receipe-wrapper {
     margin-top: 80px;
