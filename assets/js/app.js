@@ -12,7 +12,7 @@ var model = {
 var octopus = {
   // connection between model and view
   init: function() {
-    settingsView.render();
+    settingsView.init();
   },
 
   // For local storage use
@@ -140,6 +140,17 @@ var octopus = {
 
 var settingsView = {
 
+  init: function() {
+    // Add event listener on the submit button
+    $('#settings-form').submit(function(event) {
+      event.preventDefault();
+      settingsView.getObjectProperties();
+      var receipe = settingsView.calculateReceipe(octopus.getModelElements());
+      receipeView.render(receipe);
+    });
+    this.render();
+  },
+
   getObjectProperties: function() {
     var $inputs = $('.input, .checkbox-input');
     var properties = [];
@@ -209,17 +220,10 @@ var settingsView = {
 
   render: function() {
 
-    // Add event listener on the submit button
-    $('#settings-form').submit(function(event) {
-      event.preventDefault();
-      settingsView.getObjectProperties();
-      var receipe = settingsView.calculateReceipe(octopus.getModelElements());
-      receipeView.render(receipe);
-    });
-
     //Get saved settins and update the DOM
     octopus.getSavedSettings();
     var receipe = this.calculateReceipe(octopus.getModelElements());
+    receipeView.render(receipe);
   }
 }
 
