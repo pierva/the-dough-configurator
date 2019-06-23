@@ -322,9 +322,10 @@ var receipeView = {
       if(key!=='balls_total' && key!=='balls_weight' && key!=='total_weight'){
         if (key === 'total_flour'){
           $span1 = $('<span class="col-8 text-capitalize"></span>')
-                      .text('Total Flour');
+                      .text('Total Flour:');
         } else {
-          $span1 = $('<span class="col-8 text-capitalize"></span>').text(key);
+          $span1 = $('<span class="col-8 text-capitalize"></span>')
+                      .text(key + ":");
         }
         $row = $('<div class="receipe-row row"></div>');
         $span2 = $('<span class="ingredient-quantity"></span>')
@@ -339,5 +340,4 @@ var receipeView = {
 
 $(document).ready(function () {
   octopus.init();
-  new WOW().init();
 });
