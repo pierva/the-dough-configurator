@@ -41,6 +41,9 @@ var model = {
   "default_motherYeast": 3,
   "default_freshYeast": 0.03,
   "default_dryYeast": 0.01,
+  "user_motherYeast": null,
+  "user_freshYeast": null,
+  "user_dryYeast":null
 }
 
 var octopus = {
@@ -162,15 +165,35 @@ var octopus = {
     }
   },
 
-  getYeastPercentage: function(type){
+  setUserYeastConcentration: function(arr) {
+    // arr is an array of objects with keys type and value
+    if (arr.length) {
+      $.each(arr, function(index, elem) {
+        model[elem.type] = parseFloat(elem.value);
+      });
+      return true;
+    }
+    return false;
+  },
+
+  getYeastPercentage: function(type) {
     switch (type) {
       case 'motherYeast':
+        if (model.user_motherYeast){
+          return model.user_motherYeast;
+        }
         return model.default_motherYeast;
         break;
       case 'freshYeast':
+        if (model.user_freshYeast){
+          return model.user_freshYeast;
+        }
         return model.default_freshYeast;
         break;
       case 'dryYeast':
+        if (model.user_dryYeast){
+          return model.user_dryYeast;
+        }
         return model.default_dryYeast;
         break;
     }
@@ -194,7 +217,24 @@ var settingsView = {
       settingsView.restoreDefaultSettings();
       settingsView.validator();
       octopus.clearStorage();
-    })
+    });
+
+    $('#setYeastConc').on('click', function(event) {
+      event.preventDefault();
+      var values = $('.user-yeast').find('input').serialize().split('&');
+      var results = [];
+      $.each(values, function(index, elem){
+        var obj = {}
+        var keyVal = elem.split('=');
+        if (keyVal[1] !== ""){
+          obj.type = keyVal[0];
+          obj.value = keyVal[1];
+          results.push(obj);
+        }
+      });
+      octopus.setUserYeastConcentration(results);
+    });
+
     this.render();
   },
 

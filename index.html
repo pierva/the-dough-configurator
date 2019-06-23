@@ -23,6 +23,64 @@
     <meta name="theme-color" content="#ffffff">
   </head>
   <body>
+
+    <div class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-light bg-dark">
+            <h4 class="modal-title">Custom yeast concentrations</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body user-yeast">
+            <div class="form-group row">
+              <label for="user_motherYeast" class="col-5">
+                Mother yeast:
+              </label>
+              <div class="col-7">
+                <span class="inline-element">%</span>
+                <input type="number" name="user_motherYeast" min="1"
+                  max="30" class="input" step="0.1">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="user_freshYeast" class="col-5">
+                Fresh yeast:
+              </label>
+              <div class="col-7">
+                <span class="inline-element">%</span>
+                <input type="number" name="user_freshYeast" min="0.01"
+                  max="10" class="input" step="0.01">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="user_dryYeast" class="col-5">
+                Dry yeast:
+              </label>
+              <div class="col-7">
+                <span class="inline-element">%</span>
+                <input type="number" name="user_dryYeast" min="0.01"
+                  max="5" class="input" step="0.01">
+              </div>
+            </div>
+            <div class="text-center">
+              <small>
+                To use a default value, leave the field empty.
+              </small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="setYeastConc">
+              Save changes
+            </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <div class="container mt-5 mb-5">
       <h1 class="text-center header-margin">The Pizza Dough Configurator</h1>
       <div class="row">
@@ -59,7 +117,11 @@
             </div>
             <div class="form-group row">
               <label for="yeast_type" class="col-6 col-form-label">
-                Type of yeast
+                Yeast type
+                <span id="set-yeast" data-toggle="modal" data-target=".modal"
+                  class="btn btn-sm btn-outline-secondary">
+                  Set %
+                </span>
               </label>
               <div class="col-6">
                 <select class="input" name='yeast_type'>
