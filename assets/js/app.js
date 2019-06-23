@@ -243,6 +243,7 @@ var settingsView = {
       settingsView.restoreDefaultSettings();
       settingsView.validator();
       octopus.clearStorage();
+      settingsView.warnForUserSettings('[name="yeast_type"]', false);
     });
 
     $('.modal-form').on('submit', function(event) {
