@@ -34,47 +34,51 @@
             </button>
           </div>
           <div class="modal-body user-yeast">
-            <div class="form-group row">
-              <label for="user_motherYeast" class="col-5">
-                Mother yeast:
-              </label>
-              <div class="col-7">
-                <span class="inline-element">%</span>
-                <input type="number" name="user_motherYeast" min="1"
+            <form class="modal-form">
+              <div class="form-group row">
+                <label for="user_motherYeast" class="col-5">
+                  Mother yeast:
+                </label>
+                <div class="col-7">
+                  <span class="inline-element">%</span>
+                  <input type="number" name="user_motherYeast" min="1"
                   max="30" class="input" step="0.1">
+                </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <label for="user_freshYeast" class="col-5">
-                Fresh yeast:
-              </label>
-              <div class="col-7">
-                <span class="inline-element">%</span>
-                <input type="number" name="user_freshYeast" min="0.01"
+              <div class="form-group row">
+                <label for="user_freshYeast" class="col-5">
+                  Fresh yeast:
+                </label>
+                <div class="col-7">
+                  <span class="inline-element">%</span>
+                  <input type="number" name="user_freshYeast" min="0.01"
                   max="10" class="input" step="0.01">
+                </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <label for="user_dryYeast" class="col-5">
-                Dry yeast:
-              </label>
-              <div class="col-7">
-                <span class="inline-element">%</span>
-                <input type="number" name="user_dryYeast" min="0.01"
+              <div class="form-group row">
+                <label for="user_dryYeast" class="col-5">
+                  Dry yeast:
+                </label>
+                <div class="col-7">
+                  <span class="inline-element">%</span>
+                  <input type="number" name="user_dryYeast" min="0.01"
                   max="5" class="input" step="0.01">
+                </div>
               </div>
-            </div>
-            <div class="text-center">
-              <small>
-                To use a default value, leave the field empty.
-              </small>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="setYeastConc">
-              Save changes
-            </button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <div class="text-center">
+                <small>
+                  To use a default value, leave the field empty.
+                </small>
+                <br>
+                <small>
+                  After changing this settings, recalculate to get the new receipe.
+                </small>
+              </div>
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value='Save Changes' id="setYeastConc">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

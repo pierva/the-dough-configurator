@@ -37,6 +37,18 @@ var model = {
       "name": "allowance_quantity",
       "value": 20
     },
+    {
+      "name": "user_motherYeast",
+      "value": ""
+    },
+    {
+      "name": "user_freshYeast",
+      "value": ""
+    },
+    {
+      "name": "user_dryYeast",
+      "value": ""
+    },
   ],
   "default_motherYeast": 3,
   "default_freshYeast": 0.03,
@@ -136,14 +148,26 @@ var octopus = {
           } else {
             model.elements[elem.name] = savedValue;
             elem.value = savedValue;
+            if (elem.name in model){
+              model[elem.name] = parseFloat(savedValue);
+            }
           }
           settingsView.updateSetting(elem);
           return elem;
         }
       });
+      if (this.checkForUserSettings()) {
+        settingsView.warnForUserSettings('[name="yeast_type"]', true);
+      }
       return elements;
     }
     return false;
+  },
+
+  checkForUserSettings: function() {
+    if (model.user_motherYeast || model.user_freshYeast || model.user_dryYeast){
+      return true;
+    } else return false;
   },
 
   populateStorage: function(elements) {
@@ -171,8 +195,10 @@ var octopus = {
       $.each(arr, function(index, elem) {
         model[elem.name] = elem.value ? parseFloat(elem.value) : null;
       });
+      settingsView.showFeedback('#setYeastConc');
       return true;
     }
+    settingsView.showFeedback('#setYeastConc', 'failure');
     return false;
   },
 
@@ -219,21 +245,54 @@ var settingsView = {
       octopus.clearStorage();
     });
 
-    $('#setYeastConc').on('click', function(event) {
+    $('.modal-form').on('submit', function(event) {
       event.preventDefault();
-      var values = $('.user-yeast').find('input').serialize().split('&');
-      var results = [];
-      $.each(values, function(index, elem){
-        var obj = {}
-        var keyVal = elem.split('=');
-        obj.name = keyVal[0];
-        keyVal[1] !== "" ? obj.value = keyVal[1] : obj.value = null;
-        results.push(obj);
-      });
-      octopus.setUserYeastConcentration(results);
+      octopus.setUserYeastConcentration(
+        settingsView.getUserYeastConcentrations());
+
+      var userSettings = octopus.checkForUserSettings();
+      settingsView.warnForUserSettings('[name="yeast_type"]', userSettings);
+
+      // Save in the localStorage
+      var elements = settingsView.getObjectProperties();
+      octopus.populateStorage(elements);
     });
 
     this.render();
+  },
+
+  showFeedback: function(domElement, type) {
+    // this function toggles the success class to the passed domElement
+    // domElement must be a valid jQuery selector
+    // type is either 'success' or anything else for failure
+    type = (typeof type === 'undefined') ? 'success' : type.toLowerCase();
+    var className = type === 'success' ? 'bg-success' : 'bg-danger';
+    $(domElement).addClass(className).delay(1000).queue(function(next) {
+      $(this).removeClass(className);
+      next();
+    });
+  },
+
+  warnForUserSettings: function(domSelector, addOrRemove) {
+    // this function will change the border color and width of the input
+    if(addOrRemove){
+      $(domSelector).addClass('user-settings');
+    } else {
+      $(domSelector).removeClass('user-settings');
+    }
+  },
+
+  getUserYeastConcentrations: function() {
+    var values = $('.user-yeast').find('input').serialize().split('&');
+    var results = [];
+    $.each(values, function(index, elem){
+      var obj = {}
+      var keyVal = elem.split('=');
+      obj.name = keyVal[0];
+      keyVal[1] !== "" ? obj.value = keyVal[1] : obj.value = null;
+      results.push(obj);
+    });
+    return results;
   },
 
   getObjectProperties: function() {
