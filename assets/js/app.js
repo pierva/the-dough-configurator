@@ -166,10 +166,10 @@ var octopus = {
   },
 
   setUserYeastConcentration: function(arr) {
-    // arr is an array of objects with keys type and value
+    // arr is an array of objects with keys: name and value
     if (arr.length) {
       $.each(arr, function(index, elem) {
-        model[elem.type] = parseFloat(elem.value);
+        model[elem.name] = elem.value ? parseFloat(elem.value) : null;
       });
       return true;
     }
@@ -226,11 +226,9 @@ var settingsView = {
       $.each(values, function(index, elem){
         var obj = {}
         var keyVal = elem.split('=');
-        if (keyVal[1] !== ""){
-          obj.type = keyVal[0];
-          obj.value = keyVal[1];
-          results.push(obj);
-        }
+        obj.name = keyVal[0];
+        keyVal[1] !== "" ? obj.value = keyVal[1] : obj.value = null;
+        results.push(obj);
       });
       octopus.setUserYeastConcentration(results);
     });
