@@ -48,6 +48,9 @@ body {
 
 .receipe-wrapper {
   margin-top: 70px;
+  height: 95%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .receipe-header {
@@ -93,6 +96,7 @@ body {
 @media (min-width: 1200px) {
   .receipe-wrapper {
     margin-top: 80px;
+    height: calc(100% - 90px);
   }
 
   .receipe-row {
@@ -110,20 +114,18 @@ body {
 @media (min-width: 576px) and (max-width: 765px) {
   .receipe-wrapper {
     margin-top: 90px;
+    height: calc(100% - 100px);
   }
 
   .receipe-row {
     line-height: 88px;
-  }
-
-  .img-bg {
-    height: 80vh;
   }
 }
 
 @media (min-width: 400px) and (max-width: 575px) {
   .receipe-wrapper {
     margin-top: 15vw;
+    height: calc(100% - 15vw - 10px);
   }
 
   .receipe-row {
@@ -138,7 +140,8 @@ body {
   }
 
   .receipe-wrapper {
-    margin-top: 18%
+    margin-top: 18%;
+    height: 77%;
   }
 
   .img-bg {
