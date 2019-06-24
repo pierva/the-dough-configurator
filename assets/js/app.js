@@ -196,6 +196,7 @@ var octopus = {
         model[elem.name] = elem.value ? parseFloat(elem.value) : null;
       });
       settingsView.showFeedback('#setYeastConc');
+      setTimeout(settingsView.toggleModal, 1000, '.modal', 'hide');
       return true;
     }
     settingsView.showFeedback('#setYeastConc', 'failure');
@@ -266,12 +267,20 @@ var settingsView = {
     // this function toggles the success class to the passed domElement
     // domElement must be a valid jQuery selector
     // type is either 'success' or anything else for failure
+    // closeModal is optional and it is used to close the modal
     type = (typeof type === 'undefined') ? 'success' : type.toLowerCase();
     var className = type === 'success' ? 'bg-success' : 'bg-danger';
-    $(domElement).addClass(className).delay(1000).queue(function(next) {
+    $(domElement).addClass(className).delay(700).queue(function(next) {
       $(this).removeClass(className);
       next();
     });
+  },
+
+  toggleModal: function(modalSelector, option) {
+    // option can be 'show', 'hide', 'toggle'
+    // default is toggle
+    option = typeof option === 'undefined' ? 'toggle' : option.toLowerCase();
+    $(modalSelector).modal(option);
   },
 
   warnForUserSettings: function(domSelector, addOrRemove) {
