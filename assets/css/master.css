@@ -41,6 +41,10 @@ body {
   font-weight: 400;
 }
 
+select.input {
+  padding-left: 1rem;
+}
+
 .inline-element {
   position: absolute;
   top: 7px;
@@ -96,6 +100,11 @@ body {
 .user-settings {
   border-color: #ffc107;
   border-width: 2px;
+}
+
+.result {
+  font-size: 3rem;
+  color: rgb(80, 80, 80);
 }
 
 .copyright {

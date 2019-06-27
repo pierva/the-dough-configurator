@@ -100,24 +100,27 @@
           </div>
           <form id="settings-form" method="post">
             <div class="form-group row">
-              <label for="balls_total" class="col-6 col-form-label">Total pizzas (#)</label>
+              <label for="balls_total" class="col-6 col-form-label">Total pizzas</label>
               <div class="col-6">
+                <span class="inline-element">#</span>
                 <input class="input" type="number" name="balls_total"
                   min='1' required>
               </div>
             </div>
             <div class="form-group row">
-              <label for="balls_weight" class="col-6 col-form-label">Balls weight (gr)</label>
+              <label for="balls_weight" class="col-6 col-form-label">Balls weight</label>
               <div class="col-6">
+                <span class="inline-element">gr</span>
                 <input class="input" type="number" name="balls_weight"
                   min='10' required>
               </div>
             </div>
             <div class="form-group row">
               <label for="hydration" class="col-6 col-form-label">
-                Hydration (%)
+                Hydration
               </label>
               <div class="col-6">
+                <span class="inline-element">%</span>
                 <input class="input" type="number" name="hydration"
                   min='40' max='100' required>
               </div>
@@ -140,9 +143,10 @@
             </div>
             <div class="form-group row">
               <label for="salt" class="col-6 col-form-label">
-                Salt (%)
+                Salt
               </label>
               <div class="col-6">
+                <span class="inline-element">%</span>
                 <input class="input" type="number" name="salt"
                   min='0' max='10' value="3" required>
               </div>
@@ -246,11 +250,14 @@
                   </select>
               </div>
             </div>
-
-            <div class="mt-5">
-              <input type="submit" value="Get Temp"
-                class="w-100 btn btn-secondary">
+            <div class="result text-center">
+              <span class="result-value">--</span><span>&deg;C</span>
             </div>
+
+            <!-- <div class="mt-5">
+              <input type="submit" value="Get water temperature"
+                class="w-100 btn btn-secondary">
+            </div> -->
           </form>
         </div>
       </div>
