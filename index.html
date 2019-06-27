@@ -199,6 +199,61 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-6 mt-5">
+          <h5 class="text-center mb-3">CALCULATE WATER TEMPERATURE</h5>
+          <form id="water-form" method="post">
+            <div class="form-group row">
+              <label for="final_temp" class="col-6 col-form-label">Final dough temp</label>
+              <div class="col-6">
+                <span class="inline-element">&deg;C</span>
+                <input class="input" type="number" name="final_temp"
+                  min='23' max="28" value="25" required>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="ambient_temp" class="col-6 col-form-label">Ambient temp</label>
+              <div class="col-6">
+                <span class="inline-element">&deg;C</span>
+                <input class="input" type="number" name="ambient_temp"
+                  min='10' max="45" required>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="flour_temp" class="col-6 col-form-label">
+                Flour temp
+              </label>
+              <div class="col-6">
+                <span class="inline-element">&deg;C</span>
+                <input class="input" type="number" name="flour_temp"
+                  min='5' max="48" required>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="machine_type" class="col-6 col-form-label">
+                Machine type
+              </label>
+              <div class="col-6">
+                <select class="input" name='machine_type'>
+                  <option value="motherYeast">Spiral</option>
+                  <option value="freshYeast">Fork</option>
+                  <option value="dryYeast">Double arm</option>
+                  <option value="dryYeast">Manual by hands</option>
+                  </select>
+              </div>
+            </div>
+
+            <div class="mt-5">
+              <input type="submit" value="Get Temp"
+                class="w-100 btn btn-secondary">
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <footer class="footer">
