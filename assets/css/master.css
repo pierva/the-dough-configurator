@@ -107,6 +107,10 @@ select.input {
   color: rgb(80, 80, 80);
 }
 
+.condiments {
+  font-size: 1.5rem;
+}
+
 .copyright {
   text-align: center;
   font-size: 1.2rem;
