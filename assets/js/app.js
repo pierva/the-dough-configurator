@@ -49,13 +49,23 @@ var model = {
       "name": "user_dryYeast",
       "value": ""
     },
+    {
+      "name": "machine_type",
+      "value": "spiral"
+    },
   ],
   "default_motherYeast": 3,
   "default_freshYeast": 0.03,
   "default_dryYeast": 0.01,
   "user_motherYeast": null,
   "user_freshYeast": null,
-  "user_dryYeast":null
+  "user_dryYeast":null,
+  "default_spiral": 9,
+  "default_fork": 3,
+  "default_doubleArm": 6,
+  "default_hands": 1,
+  "default_tomatoes": 80,
+  "default_mozzarella": 120
 }
 
 var octopus = {
