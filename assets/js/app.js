@@ -72,6 +72,7 @@ var octopus = {
   // connection between model and view
   init: function() {
     settingsView.init();
+    waterTempView.init();
   },
 
   // For local storage use
@@ -233,6 +234,23 @@ var octopus = {
         }
         return model.default_dryYeast;
         break;
+    }
+  },
+
+  getMachineTemp: function(type) {
+    switch (type) {
+      case 'spiral':
+        return model.default_spiral;
+        break;
+      case 'fork':
+        return model.default_fork;
+        break;
+      case 'doubleArm':
+        return model.default_doubleArm;
+        break;
+      case 'hands':
+        return model.default_hands;
+      break;
     }
   }
 }
@@ -450,6 +468,35 @@ var receipeView = {
         $row.append($span1, $span2);
         $receipeWrapper.append($row);
       }
+    }
+  }
+};
+
+var waterTempView = {
+  // Add event listener to the form
+  init: function() {
+    $('#water-form').on('change submit keyup', function(event) {
+      event.preventDefault();
+      var $result = $('.result-value');
+      var temp = waterTempView.calculateWaterTemp();
+      $result.text(waterTempView.calculateWaterTemp());
+    });
+  },
+
+  calculateWaterTemp: function() {
+    var $final_temp = $('[name="final_temp"]');
+    var $ambient_temp = $('[name="ambient_temp"]');
+    var $flour_temp = $('[name="flour_temp"]');
+    var machine_type = $("[name='machine_type']").val();
+    if ($final_temp.val() !== "" && $ambient_temp.val() !== "" &&
+        $flour_temp.val() !== "") {
+      var t_water = 3 * parseInt($final_temp.val()) -
+                    parseInt($flour_temp.val()) -
+                    parseInt($ambient_temp.val()) -
+                    octopus.getMachineTemp(machine_type);
+      return t_water;
+    } else {
+      return '--'
     }
   }
 };
