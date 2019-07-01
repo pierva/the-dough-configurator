@@ -480,6 +480,11 @@ var waterTempView = {
       var $result = $('.result-value');
       var temp = waterTempView.calculateWaterTemp();
       $result.text(waterTempView.calculateWaterTemp());
+      if (temp !== "--") {
+        // Save in the localStorage
+        var elements = settingsView.getObjectProperties();
+        octopus.populateStorage(elements);
+      }
     });
   },
 
