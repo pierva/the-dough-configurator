@@ -50,6 +50,18 @@ var model = {
       "value": ""
     },
     {
+      "name": "final_temp",
+      "value": ""
+    },
+    {
+      "name": "ambient_temp",
+      "value": ""
+    },
+    {
+      "name": "flour_temp",
+      "value": ""
+    },
+    {
       "name": "machine_type",
       "value": "spiral"
     },
@@ -281,6 +293,8 @@ var settingsView = {
     $('#default').click(function(event) {
       settingsView.restoreDefaultSettings();
       settingsView.validator();
+      receipeView.reset();
+      toppingsView.reset();
       octopus.clearStorage();
       settingsView.warnForUserSettings('[name="yeast_type"]', false);
     });
@@ -481,6 +495,11 @@ var receipeView = {
         $receipeWrapper.append($row);
       }
     }
+  },
+
+  reset: function() {
+    $('.receipe-wrapper').empty();
+    return true;
   }
 };
 
@@ -541,6 +560,12 @@ var toppingsView = {
       $mozzarella.text('--');
     }
     return false;
+  },
+
+  reset: function() {
+    $('#tomatoes').text('--');
+    $('#mozzarella').text('--');
+    $('#saltQuantity').text('--');
   }
 }
 
