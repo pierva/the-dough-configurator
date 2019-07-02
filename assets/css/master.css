@@ -108,7 +108,15 @@ select.input {
 }
 
 .condiments {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  color: rgb(80, 80, 80);
+}
+
+.salt {
+  font-size: 0.8rem;
+  position: absolute;
+  left: 80px;
+  top: 40px;
 }
 
 .copyright {

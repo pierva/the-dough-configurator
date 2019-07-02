@@ -65,7 +65,8 @@ var model = {
   "default_doubleArm": 6,
   "default_hands": 1,
   "default_tomatoes": 80,
-  "default_mozzarella": 120
+  "default_mozzarella": 120,
+  "default_tomatoes_salt": 100
 }
 
 var octopus = {
@@ -252,6 +253,14 @@ var octopus = {
         return model.default_hands;
       break;
     }
+  },
+
+  getDefaultToppingQuantities: function() {
+    var obj = {}
+    obj.tomatoes = model.default_tomatoes;
+    obj.mozzarella = model.default_mozzarella;
+    obj.salt = model.default_tomatoes_salt;
+    return obj;
   }
 }
 
@@ -263,6 +272,7 @@ var settingsView = {
       event.preventDefault();
       var elements = settingsView.getObjectProperties();
       var receipe = settingsView.calculateReceipe(octopus.getModelElements());
+      toppingsView.updateQuantities(parseInt(receipe["balls_total"]));
       settingsView.validator();
       receipeView.render(receipe);
       octopus.populateStorage(elements);
@@ -436,6 +446,8 @@ var settingsView = {
     if (settingsAvailable) {
       var receipe = this.calculateReceipe(octopus.getModelElements());
       receipeView.render(receipe);
+      waterTempView.updateWaterTemp();
+      toppingsView.updateQuantities(parseInt(receipe["balls_total"]));
     }
   }
 }
@@ -503,8 +515,34 @@ var waterTempView = {
     } else {
       return '--'
     }
+  },
+
+  updateWaterTemp: function() {
+    var $result = $('.result-value');
+    var temp = waterTempView.calculateWaterTemp();
+    $result.text(waterTempView.calculateWaterTemp());
   }
 };
+
+var toppingsView = {
+  updateQuantities: function(pizzas) {
+    var $tomatoes = $('#tomatoes');
+    var $mozzarella = $('#mozzarella');
+    var $salt = $('#saltQuantity');
+    if (pizzas) {
+      var toppings = octopus.getDefaultToppingQuantities();
+      var tomatoesGr = pizzas * toppings.tomatoes;
+      $tomatoes.text(tomatoesGr);
+      $mozzarella.text(pizzas * toppings.mozzarella);
+      $salt.text((tomatoesGr / toppings.salt).toFixed(1));
+      return true;
+    } else {
+      $tomatoes.text('--');
+      $mozzarella.text('--');
+    }
+    return false;
+  }
+}
 
 
 $(document).ready(function () {
