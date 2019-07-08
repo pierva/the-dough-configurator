@@ -38,6 +38,14 @@ var model = {
       "value": 20
     },
     {
+      "name": "flour2_quantity",
+      "value": ""
+    },
+    {
+      "name": "flour3_quantity",
+      "value": ""
+    },
+    {
       "name": "user_motherYeast",
       "value": ""
     },
@@ -433,14 +441,40 @@ var settingsView = {
       totalPercent += octopus.setIngredientPercentage('salt');
 
       results.total_flour = Math.round(results.total_weight*100/totalPercent);
-      // this must be last because we need the quantity in gr
+
+      if (elems.flour2_quantity !== "" || elems.flour3_quantity !== "") {
+        results.flour_blend = true;
+        var quantity2 = 0;
+        var quantity3 = 0;
+        var perc2 = 0;
+        var perc3 = 0;
+        if (elems.flour2_quantity !== "" && elems.flour3_quantity !== "") {
+          perc2 = parseInt(elems.flour2_quantity);
+          perc3 = parseInt(elems.flour3_quantity);
+          quantity2 = Math.round(results.total_flour * perc2 / 100);
+          quantity3 = Math.round(results.total_flour * perc3 / 100);
+        } else if (elems.flour2_quantity !== "") {
+          perc2 = parseInt(elems.flour2_quantity);
+          quantity2 = Math.round(results.total_flour * perc2 / 100);
+        } else {
+          perc2 = parseInt(elems.flour3_quantity);
+          quantity2 = Math.round(results.total_flour * perc2 / 100);
+        }
+        results['flour1(' + (100 - perc2 - perc3) + ')'] = results.total_flour - quantity2 - quantity3;
+        if (quantity3) {
+          results['flour2(' + perc2 + ')'] = quantity2;
+          results['flour3(' + perc3 + ')'] = quantity3;
+        } else {
+          results['flour2(' + perc2 + ')'] = quantity2;
+        }
+      } else {
+        results.flour_blend = null;
+      }
       if(elems.oil){
         var oilPercent = octopus.setIngredientPercentage('oil_quantity');
         results.oil = Math.round(results.total_weight * oilPercent/
                                              totalPercent);
       }
-      // results
-
       results.yeast = (results.total_weight *
                        octopus.getYeastPercentage(elems.yeast_type)/
                        totalPercent).toFixed(1);
@@ -480,17 +514,24 @@ var receipeView = {
       );
     };
     for (var key in receipe){
-      if(key!=='balls_total' && key!=='balls_weight' && key!=='total_weight'){
+      if(key!=='balls_total' && key!=='balls_weight' && key!=='total_weight' &&
+         key!=='flour_blend'){
+        $row = $('<div class="receipe-row row"></div>');
         if (key === 'total_flour'){
+          if(receipe.flour_blend){
+            $row.removeClass('row').addClass('flour_blend');
+          }
           $span1 = $('<span class="col-8 text-capitalize"></span>')
                       .text('Total Flour:');
         } else {
+
           $span1 = $('<span class="col-8 text-capitalize"></span>')
                       .text(key + ":");
         }
-        $row = $('<div class="receipe-row row"></div>');
+
+        // Check for flour blend
         $span2 = $('<span class="ingredient-quantity"></span>')
-        .text(receipe[key] + ' gr');
+                  .text(receipe[key] + ' gr');
         $row.append($span1, $span2);
         $receipeWrapper.append($row);
       }
