@@ -86,7 +86,7 @@ select.input {
   bottom: 0px;
   width: 40%;
   opacity: 0.8;
-  left: 25px;
+  left: 40px;
 }
 
 .ingredient-basil {
@@ -95,6 +95,13 @@ select.input {
   width: 20%;
   opacity: 0.8;
   right: 0px;
+}
+
+.flour_blend {
+  position: absolute;
+  top: 12px;
+  font-size: 18px !important;
+  left: 0px;
 }
 
 .user-settings {
