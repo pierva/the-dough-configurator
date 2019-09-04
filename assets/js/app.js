@@ -268,6 +268,14 @@ var settingsView = {
       octopus.populateStorage(elements);
     });
 
+    $('#settings-form').on('change keyup', function(event) {
+      event.preventDefault();
+      var elements = settingsView.getObjectProperties();
+      var receipe = settingsView.calculateReceipe(octopus.getModelElements());
+      receipeView.render(receipe);
+      octopus.populateStorage(elements);
+    });
+
     $('#default').click(function(event) {
       settingsView.restoreDefaultSettings();
       settingsView.validator();
