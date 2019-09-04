@@ -302,6 +302,7 @@ var settingsView = {
       event.preventDefault();
       var elements = settingsView.getObjectProperties();
       var receipe = settingsView.calculateReceipe(octopus.getModelElements());
+      toppingsView.updateQuantities(parseInt(receipe["balls_total"]));
       receipeView.render(receipe);
       octopus.populateStorage(elements);
     });
