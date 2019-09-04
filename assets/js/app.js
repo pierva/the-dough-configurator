@@ -427,13 +427,13 @@ var settingsView = {
 
       results.yeast = (results.total_weight *
                        octopus.getYeastPercentage(elems.yeast_type)/
-                       totalPercent).toFixed(1);
+                       totalPercent).toFixed(2);
       var tot_liquids = Math.round(results.total_weight *
                                        parseInt(elems.hydration) / totalPercent);
       results.water = elems.oil ? tot_liquids - results.oil : tot_liquids;
-      results.salt = Math.round(results.total_weight *
+      results.salt = (results.total_weight *
                                 octopus.getIngredientPercentage('salt') /
-                                totalPercent);
+                                totalPercent).toFixed(1);
     }
     return results;
   },
