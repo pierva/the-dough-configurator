@@ -38,6 +38,14 @@ var model = {
       "value": 20
     },
     {
+      "name": "flour2_quantity",
+      "value": ""
+    },
+    {
+      "name": "flour3_quantity",
+      "value": ""
+    },
+    {
       "name": "user_motherYeast",
       "value": ""
     },
@@ -47,6 +55,18 @@ var model = {
     },
     {
       "name": "user_dryYeast",
+      "value": ""
+    },
+    {
+      "name": "final_temp",
+      "value": ""
+    },
+    {
+      "name": "ambient_temp",
+      "value": ""
+    },
+    {
+      "name": "flour_temp",
       "value": ""
     },
     {
@@ -65,7 +85,8 @@ var model = {
   "default_doubleArm": 6,
   "default_hands": 1,
   "default_tomatoes": 80,
-  "default_mozzarella": 120
+  "default_mozzarella": 120,
+  "default_tomatoes_salt": 100
 }
 
 var octopus = {
@@ -252,6 +273,14 @@ var octopus = {
         return model.default_hands;
       break;
     }
+  },
+
+  getDefaultToppingQuantities: function() {
+    var obj = {}
+    obj.tomatoes = model.default_tomatoes;
+    obj.mozzarella = model.default_mozzarella;
+    obj.salt = model.default_tomatoes_salt;
+    return obj;
   }
 }
 
@@ -263,6 +292,7 @@ var settingsView = {
       event.preventDefault();
       var elements = settingsView.getObjectProperties();
       var receipe = settingsView.calculateReceipe(octopus.getModelElements());
+      toppingsView.updateQuantities(parseInt(receipe["balls_total"]));
       settingsView.validator();
       receipeView.render(receipe);
       octopus.populateStorage(elements);
@@ -279,6 +309,8 @@ var settingsView = {
     $('#default').click(function(event) {
       settingsView.restoreDefaultSettings();
       settingsView.validator();
+      receipeView.reset();
+      toppingsView.reset();
       octopus.clearStorage();
       settingsView.warnForUserSettings('[name="yeast_type"]', false);
     });
@@ -417,14 +449,40 @@ var settingsView = {
       totalPercent += octopus.setIngredientPercentage('salt');
 
       results.total_flour = Math.round(results.total_weight*100/totalPercent);
-      // this must be last because we need the quantity in gr
+
+      if (elems.flour2_quantity !== "" || elems.flour3_quantity !== "") {
+        results.flour_blend = true;
+        var quantity2 = 0;
+        var quantity3 = 0;
+        var perc2 = 0;
+        var perc3 = 0;
+        if (elems.flour2_quantity !== "" && elems.flour3_quantity !== "") {
+          perc2 = parseInt(elems.flour2_quantity);
+          perc3 = parseInt(elems.flour3_quantity);
+          quantity2 = Math.round(results.total_flour * perc2 / 100);
+          quantity3 = Math.round(results.total_flour * perc3 / 100);
+        } else if (elems.flour2_quantity !== "") {
+          perc2 = parseInt(elems.flour2_quantity);
+          quantity2 = Math.round(results.total_flour * perc2 / 100);
+        } else {
+          perc2 = parseInt(elems.flour3_quantity);
+          quantity2 = Math.round(results.total_flour * perc2 / 100);
+        }
+        results['flour1(' + (100 - perc2 - perc3) + ')'] = results.total_flour - quantity2 - quantity3;
+        if (quantity3) {
+          results['flour2(' + perc2 + ')'] = quantity2;
+          results['flour3(' + perc3 + ')'] = quantity3;
+        } else {
+          results['flour2(' + perc2 + ')'] = quantity2;
+        }
+      } else {
+        results.flour_blend = null;
+      }
       if(elems.oil){
         var oilPercent = octopus.setIngredientPercentage('oil_quantity');
         results.oil = Math.round(results.total_weight * oilPercent/
                                              totalPercent);
       }
-      // results
-
       results.yeast = (results.total_weight *
                        octopus.getYeastPercentage(elems.yeast_type)/
                        totalPercent).toFixed(2);
@@ -444,6 +502,8 @@ var settingsView = {
     if (settingsAvailable) {
       var receipe = this.calculateReceipe(octopus.getModelElements());
       receipeView.render(receipe);
+      waterTempView.updateWaterTemp();
+      toppingsView.updateQuantities(parseInt(receipe["balls_total"]));
     }
   }
 }
@@ -462,21 +522,33 @@ var receipeView = {
       );
     };
     for (var key in receipe){
-      if(key!=='balls_total' && key!=='balls_weight' && key!=='total_weight'){
+      if(key!=='balls_total' && key!=='balls_weight' && key!=='total_weight' &&
+         key!=='flour_blend'){
+        $row = $('<div class="receipe-row row"></div>');
         if (key === 'total_flour'){
+          if(receipe.flour_blend){
+            $row.removeClass('row').addClass('flour_blend');
+          }
           $span1 = $('<span class="col-8 text-capitalize"></span>')
                       .text('Total Flour:');
         } else {
+
           $span1 = $('<span class="col-8 text-capitalize"></span>')
                       .text(key + ":");
         }
-        $row = $('<div class="receipe-row row"></div>');
+
+        // Check for flour blend
         $span2 = $('<span class="ingredient-quantity"></span>')
-        .text(receipe[key] + ' gr');
+                  .text(receipe[key] + ' gr');
         $row.append($span1, $span2);
         $receipeWrapper.append($row);
       }
     }
+  },
+
+  reset: function() {
+    $('.receipe-wrapper').empty();
+    return true;
   }
 };
 
@@ -511,8 +583,40 @@ var waterTempView = {
     } else {
       return '--'
     }
+  },
+
+  updateWaterTemp: function() {
+    var $result = $('.result-value');
+    var temp = waterTempView.calculateWaterTemp();
+    $result.text(waterTempView.calculateWaterTemp());
   }
 };
+
+var toppingsView = {
+  updateQuantities: function(pizzas) {
+    var $tomatoes = $('#tomatoes');
+    var $mozzarella = $('#mozzarella');
+    var $salt = $('#saltQuantity');
+    if (pizzas) {
+      var toppings = octopus.getDefaultToppingQuantities();
+      var tomatoesGr = pizzas * toppings.tomatoes;
+      $tomatoes.text(tomatoesGr);
+      $mozzarella.text(pizzas * toppings.mozzarella);
+      $salt.text((tomatoesGr / toppings.salt).toFixed(1));
+      return true;
+    } else {
+      $tomatoes.text('--');
+      $mozzarella.text('--');
+    }
+    return false;
+  },
+
+  reset: function() {
+    $('#tomatoes').text('--');
+    $('#mozzarella').text('--');
+    $('#saltQuantity').text('--');
+  }
+}
 
 
 $(document).ready(function () {
