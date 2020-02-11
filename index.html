@@ -1,357 +1,369 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>The Dough Configurator</title>
 
-    <link rel="stylesheet" href="assets/css/lib/bootstrap-4.3.1.min.css">
-    <link rel="stylesheet" href="assets/css/lib/animate.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&display=swap"
-      rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>The Dough Configurator</title>
 
-    <link rel="stylesheet" href="assets/css/master.css">
-    <link rel="stylesheet" href="assets/css/switch.css">
+  <link rel="stylesheet" href="assets/css/lib/bootstrap-4.3.1.min.css">
+  <link rel="stylesheet" href="assets/css/lib/animate.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&display=swap" rel="stylesheet">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon_package_v0.16/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon_package_v0.16/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon_package_v0.16/favicon-16x16.png">
-    <link rel="manifest" href="assets/img/favicon_package_v0.16/site.webmanifest">
-    <link rel="mask-icon" href="assets/img/favicon_package_v0.16/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#2b5797">
-    <meta name="theme-color" content="#ffffff">
-  </head>
-  <body>
+  <link rel="stylesheet" href="assets/css/master.css">
+  <link rel="stylesheet" href="assets/css/switch.css">
 
-    <div class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header text-light bg-dark">
-            <h4 class="modal-title">Custom yeast concentrations</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon_package_v0.16/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon_package_v0.16/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon_package_v0.16/favicon-16x16.png">
+  <link rel="manifest" href="assets/img/favicon_package_v0.16/site.webmanifest">
+  <link rel="mask-icon" href="assets/img/favicon_package_v0.16/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#2b5797">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+
+  <div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-light bg-dark">
+          <h4 class="modal-title">Custom yeast concentrations</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body user-yeast">
+          <div class="text-center mb-2">
+            <small>Percentages of yeast based on the total flour weight.</small>
           </div>
-          <div class="modal-body user-yeast">
-            <div class="text-center mb-2">
-              <small>Percentages of yeast based on the total flour weight.</small>
+          <form class="modal-form">
+            <div class="form-group row">
+              <label for="user_motherYeast" class="col-5">
+                Mother yeast:
+              </label>
+              <div class="col-7">
+                <span class="inline-element">%</span>
+                <input type="number" name="user_motherYeast" min="1" max="30" class="input" step="0.1">
+              </div>
             </div>
-            <form class="modal-form">
-              <div class="form-group row">
-                <label for="user_motherYeast" class="col-5">
-                  Mother yeast:
-                </label>
-                <div class="col-7">
-                  <span class="inline-element">%</span>
-                  <input type="number" name="user_motherYeast" min="1"
-                  max="30" class="input" step="0.1">
-                </div>
+            <div class="form-group row">
+              <label for="user_freshYeast" class="col-5">
+                Fresh yeast:
+              </label>
+              <div class="col-7">
+                <span class="inline-element">%</span>
+                <input type="number" name="user_freshYeast" min="0.01" max="10" class="input" step="0.01">
               </div>
-              <div class="form-group row">
-                <label for="user_freshYeast" class="col-5">
-                  Fresh yeast:
-                </label>
-                <div class="col-7">
-                  <span class="inline-element">%</span>
-                  <input type="number" name="user_freshYeast" min="0.01"
-                  max="10" class="input" step="0.01">
-                </div>
+            </div>
+            <div class="form-group row">
+              <label for="user_dryYeast" class="col-5">
+                Dry yeast:
+              </label>
+              <div class="col-7">
+                <span class="inline-element">%</span>
+                <input type="number" name="user_dryYeast" min="0.01" max="5" class="input" step="0.01">
               </div>
-              <div class="form-group row">
-                <label for="user_dryYeast" class="col-5">
-                  Dry yeast:
-                </label>
-                <div class="col-7">
-                  <span class="inline-element">%</span>
-                  <input type="number" name="user_dryYeast" min="0.01"
-                  max="5" class="input" step="0.01">
-                </div>
-              </div>
-              <div class="text-center">
-                <small>
-                  To use a default value, leave the field empty.
-                </small>
-                <br>
-                <small>
-                  After changing this settings, recalculate to get the new receipe.
-                </small>
-              </div>
-              <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" value='Save Changes' id="setYeastConc">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </form>
+            </div>
+            <div class="text-center">
+              <small>
+                To use a default value, leave the field empty.
+              </small>
+              <br>
+              <small>
+                After changing this settings, recalculate to get the new receipe.
+              </small>
+            </div>
+            <div class="modal-footer">
+              <input type="submit" class="btn btn-primary" value='Save Changes' id="setYeastConc">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container mt-5 mb-5">
+    <h1 class="text-center header-margin">The Pizza Dough Configurator</h1>
+    <div class="row">
+      <div class="col-md-6 mb-5">
+        <h3 class="text-center mb-3">Settings</h3>
+        <div class="text-center mb-3">
+          <button type="button" id="default" class="btn btn-sm btn-outline-secondary">
+            Restore defaults
+          </button>
+        </div>
+        <form id="settings-form" method="post">
+          <div class="form-group row">
+            <label for="balls_total" class="col-6 col-form-label">Total pizzas</label>
+            <div class="col-6">
+              <span class="inline-element">#</span>
+              <input class="input" type="number" name="balls_total" min='1' required>
+            </div>
           </div>
+          <div class="form-group row">
+            <label for="balls_weight" class="col-6 col-form-label">Balls weight</label>
+            <div class="col-6">
+              <span class="inline-element">gr</span>
+              <input class="input" type="number" name="balls_weight" min='10' required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="hydration" class="col-6 col-form-label">
+              Hydration
+            </label>
+            <div class="col-6">
+              <span class="inline-element">%</span>
+              <input class="input" type="number" name="hydration" min='40' max='100' required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="yeast_type" class="col-6 col-form-label">
+              Yeast type
+              <button id="set-yeast" data-toggle="modal" data-target=".modal" class="btn btn-sm btn-outline-secondary"
+                type="button">
+                Set %
+              </button>
+            </label>
+            <div class="col-6">
+              <select class="input" name='yeast_type'>
+                <option value="motherYeast">Mother yeast</option>
+                <option value="freshYeast">Fresh yeast</option>
+                <option value="dryYeast">Dry yeast</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="salt" class="col-6 col-form-label">
+              Salt
+            </label>
+            <div class="col-6">
+              <span class="inline-element">%</span>
+              <input class="input" type="number" name="salt" min='0' max='10' value="3" required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="oil" class="col-6 col-form-label">
+              Olive Oil
+            </label>
+            <div class="col-3">
+              <label class="switch">
+                <input class="checkbox-input" type="checkbox" name="oil">
+                <span class="slider slider-success round"></span>
+              </label>
+            </div>
+            <div class="col-3">
+              <span class="inline-element">%</span>
+              <input type="number" name="oil_quantity" value="1" min="1" max="60" class="input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="allowance" class="col-6 col-form-label">
+              Allowance
+            </label>
+            <div class="col-3">
+              <label class="switch">
+                <input class="checkbox-input" type="checkbox" name="allowance" checked>
+                <span class="slider slider-success round"></span>
+              </label>
+            </div>
+            <div class="col-3">
+              <span class="inline-element">gr</span>
+              <input type="number" name="allowance_quantity" value="20" min="0" class="input">
+            </div>
+          </div>
+
+          <div class="row">
+            <label for="flour2_quantity" class="col-6 col-form-label">
+              Flour blend
+            </label>
+            <div class="col-3">
+              <span class="inline-element">%</span>
+              <input type="number" name="flour2_quantity" min="1" max="100" class="input">
+            </div>
+            <div class="col-3">
+              <span class="inline-element">%</span>
+              <input type="number" name="flour3_quantity" min="1" max="100" class="input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-6 col-3 text-center">
+              <small>2<sup>nd</sup> Flour</small>
+            </div>
+            <div class="col-3 text-center">
+              <small>3<sup>rd</sup> Flour</small>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <input type="submit" name="submit" value="Calculate" class="w-100 btn btn-secondary">
+          </div>
+        </form>
+      </div>
+      <div class="col-md-5 offset-md-1 img-bg">
+        <div class="receipe-wrapper">
+        </div>
+        <div>
+          <img class="ingredient-flour animated fadeIn delay-1s" src="assets/img/flour.png" alt="flour">
+        </div>
+        <div>
+          <img class="ingredient-basil animated fadeInDownBig delay-2s" src="assets/img/basil.png" alt="flour">
         </div>
       </div>
     </div>
 
-
-    <div class="container mt-5 mb-5">
-      <h1 class="text-center header-margin">The Pizza Dough Configurator</h1>
-      <div class="row">
-        <div class="col-md-6 mb-5">
-          <h3 class="text-center mb-3">Settings</h3>
-          <div class="text-center mb-3">
-            <button type="button" id="default" class="btn btn-sm btn-outline-secondary">
-              Restore defaults
-            </button>
+    <div class="row">
+      <div class="col-md-6 mt-5">
+        <h5 class="text-center mb-3">CALCULATE WATER TEMPERATURE</h5>
+        <form id="water-form" method="post">
+          <div class="form-group row">
+            <label for="final_temp" class="col-6 col-form-label">Final dough temp</label>
+            <div class="col-6">
+              <span class="inline-element">&deg;C</span>
+              <input class="input" type="number" name="final_temp" min='23' max="28" value="25" required>
+            </div>
           </div>
-          <form id="settings-form" method="post">
-            <div class="form-group row">
-              <label for="balls_total" class="col-6 col-form-label">Total pizzas</label>
-              <div class="col-6">
-                <span class="inline-element">#</span>
-                <input class="input" type="number" name="balls_total"
-                  min='1' required>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="balls_weight" class="col-6 col-form-label">Balls weight</label>
-              <div class="col-6">
-                <span class="inline-element">gr</span>
-                <input class="input" type="number" name="balls_weight"
-                  min='10' required>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="hydration" class="col-6 col-form-label">
-                Hydration
-              </label>
-              <div class="col-6">
-                <span class="inline-element">%</span>
-                <input class="input" type="number" name="hydration"
-                  min='40' max='100' required>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="yeast_type" class="col-6 col-form-label">
-                Yeast type
-                <button id="set-yeast" data-toggle="modal" data-target=".modal"
-                  class="btn btn-sm btn-outline-secondary" type="button">
-                  Set %
-                </button>
-              </label>
-              <div class="col-6">
-                <select class="input" name='yeast_type'>
-                  <option value="motherYeast">Mother yeast</option>
-                  <option value="freshYeast">Fresh yeast</option>
-                  <option value="dryYeast">Dry yeast</option>
-                  </select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="salt" class="col-6 col-form-label">
-                Salt
-              </label>
-              <div class="col-6">
-                <span class="inline-element">%</span>
-                <input class="input" type="number" name="salt"
-                  min='0' max='10' value="3" required>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="oil" class="col-6 col-form-label">
-                Olive Oil
-              </label>
-              <div class="col-3">
-                <label class="switch">
-                  <input class="checkbox-input" type="checkbox" name="oil">
-                  <span class="slider slider-success round"></span>
-                </label>
-              </div>
-              <div class="col-3">
-                <span class="inline-element">%</span>
-                <input type="number" name="oil_quantity" value="1" min="1"
-                  max="60" class="input">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="allowance" class="col-6 col-form-label">
-                Allowance
-              </label>
-              <div class="col-3">
-                <label class="switch">
-                  <input class="checkbox-input" type="checkbox"
-                    name="allowance" checked>
-                  <span class="slider slider-success round"></span>
-                </label>
-              </div>
-              <div class="col-3">
-                <span class="inline-element">gr</span>
-                <input type="number" name="allowance_quantity" value="20"
-                  min="0" class="input">
-              </div>
-            </div>
 
-            <div class="row">
-              <label for="flour2_quantity" class="col-6 col-form-label">
-                Flour blend
-              </label>
-              <div class="col-3">
-                <span class="inline-element">%</span>
-                <input type="number" name="flour2_quantity"
-                  min="1" max="100" class="input">
-              </div>
-              <div class="col-3">
-                <span class="inline-element">%</span>
-                <input type="number" name="flour3_quantity"
-                  min="1" max="100" class="input">
-              </div>
+          <div class="form-group row">
+            <label for="ambient_temp" class="col-6 col-form-label">Ambient temp</label>
+            <div class="col-6">
+              <span class="inline-element">&deg;C</span>
+              <input class="input" type="number" name="ambient_temp" min='10' max="45" required>
             </div>
-            <div class="form-group row">
-              <div class="offset-6 col-3 text-center">
-                <small>2<sup>nd</sup> Flour</small>
-              </div>
-              <div class="col-3 text-center">
-                <small>3<sup>rd</sup> Flour</small>
-              </div>
-            </div>
-
-            <div class="mt-5">
-              <input type="submit" name="submit" value="Calculate"
-                class="w-100 btn btn-secondary">
-            </div>
-          </form>
-        </div>
-        <div class="col-md-5 offset-md-1 img-bg">
-          <div class="receipe-wrapper">
           </div>
-          <div>
-            <img class="ingredient-flour animated fadeIn delay-1s"
-              src="assets/img/flour.png" alt="flour">
+
+          <div class="form-group row">
+            <label for="flour_temp" class="col-6 col-form-label">
+              Flour temp
+            </label>
+            <div class="col-6">
+              <span class="inline-element">&deg;C</span>
+              <input class="input" type="number" name="flour_temp" min='5' max="48" required>
+            </div>
           </div>
-          <div>
-            <img class="ingredient-basil animated fadeInDownBig delay-2s"
-              src="assets/img/basil.png" alt="flour">
+
+          <div class="form-group row">
+            <label for="machine_type" class="col-6 col-form-label">
+              Machine type
+            </label>
+            <div class="col-6">
+              <select class="input" name='machine_type'>
+                <option value="spiral">Spiral</option>
+                <option value="fork">Fork</option>
+                <option value="doubleArm">Double arm</option>
+                <option value="hands">Manual by hands</option>
+              </select>
+            </div>
           </div>
-        </div>
-      </div>
+          <div class="result text-center">
+            <span class="result-value">--</span><span>&deg;C</span>
+          </div>
 
-      <div class="row">
-        <div class="col-md-6 mt-5">
-          <h5 class="text-center mb-3">CALCULATE WATER TEMPERATURE</h5>
-          <form id="water-form" method="post">
-            <div class="form-group row">
-              <label for="final_temp" class="col-6 col-form-label">Final dough temp</label>
-              <div class="col-6">
-                <span class="inline-element">&deg;C</span>
-                <input class="input" type="number" name="final_temp"
-                  min='23' max="28" value="25" required>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="ambient_temp" class="col-6 col-form-label">Ambient temp</label>
-              <div class="col-6">
-                <span class="inline-element">&deg;C</span>
-                <input class="input" type="number" name="ambient_temp"
-                  min='10' max="45" required>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="flour_temp" class="col-6 col-form-label">
-                Flour temp
-              </label>
-              <div class="col-6">
-                <span class="inline-element">&deg;C</span>
-                <input class="input" type="number" name="flour_temp"
-                  min='5' max="48" required>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="machine_type" class="col-6 col-form-label">
-                Machine type
-              </label>
-              <div class="col-6">
-                <select class="input" name='machine_type'>
-                  <option value="spiral">Spiral</option>
-                  <option value="fork">Fork</option>
-                  <option value="doubleArm">Double arm</option>
-                  <option value="hands">Manual by hands</option>
-                  </select>
-              </div>
-            </div>
-            <div class="result text-center">
-              <span class="result-value">--</span><span>&deg;C</span>
-            </div>
-
-            <!-- <div class="mt-5">
+          <!-- <div class="mt-5">
               <input type="submit" value="Get water temperature"
                 class="w-100 btn btn-secondary">
             </div> -->
-          </form>
-        </div>
+        </form>
+      </div>
 
-        <div class="col-md-5 offset-md-1 mt-5 condiments h-100">
-          <div class="row align-items-center h-100">
-            <div class="col-4">
-              <img class="w-100 animated fadeInRight delay-1s"
-              src="assets/img/tomatoes.png" alt="tomatoes">
-            </div>
-            <div class="col-6 offset-2">
-              <span id="tomatoes">--</span>
-              <span>gr</span>
-              <div class="salt">
-                <span>/</span>
-                <span id="saltQuantity">--</span>
-                <span>gr salt</span>
-              </div>
-            </div>
+      <div class="col-md-5 offset-md-1 mt-5 condiments h-100">
+        <div class="row align-items-center h-100">
+          <div class="col-4">
+            <img class="w-100 animated fadeInRight delay-1s" src="assets/img/tomatoes.png" alt="tomatoes">
           </div>
-
-          <div class="row align-items-center h-100 mt-3">
-            <div class="col-4">
-              <img class="w-100 animated fadeInLeft delay-1s"
-              src="assets/img/mozzarelle.png" alt="mozzarelle">
-            </div>
-            <div class="col-6 offset-2">
-              <span id="mozzarella">--</span>
-              <span>gr</span>
+          <div class="col-6 offset-2">
+            <span id="tomatoes">--</span>
+            <span>gr</span>
+            <div class="salt">
+              <span>/</span>
+              <span id="saltQuantity">--</span>
+              <span>gr salt</span>
             </div>
           </div>
         </div>
 
+        <div class="row align-items-center h-100 mt-3">
+          <div class="col-4">
+            <img class="w-100 animated fadeInLeft delay-1s" src="assets/img/mozzarelle.png" alt="mozzarelle">
+          </div>
+          <div class="col-6 offset-2">
+            <span id="mozzarella">--</span>
+            <span>gr</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <footer class="footer">
-      <div class="container">
-        <div class="text-center c-pointer">
-          <p class="m-0">COURTESY OF</p>
-          <a href="https://pizzaatyours.com" target="_blank">
-            <img src="assets/img/logo.png" alt="pizzaatyours logo">
-          </a>
-        </div>
-        <div class="copyright">
-          <small>&#169; Copyright 2019, pizza@yours.com All Rights Reserved</small>
+    <div class="row">
+      <div class="col-12">
+        <h5 class="text-center mb-3">PIZZA COUNTER</h5>
+        <div class="text-center mb-3">
+          <button type="button" name="addToCounter" class="btn btn-sm btn-outline-secondary">Add to counter</button>
+          <button type="button" name="setPrices" class="btn btn-sm btn-outline-secondary">Set prices</button>
         </div>
       </div>
-    </footer>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label for="totalPizzas" class="col-6 col-form-label">
+            Total Pizzas
+          </label>
+          <div class="col-6">
+            <span class="inline-element">#</span>
+            <input class="input" type="text" name="totalPizzas" id="totalPizzas" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label for="totalPFlour" class="col-6 col-form-label">
+            Total Flour
+          </label>
+          <div class="col-6">
+            <span class="inline-element">kg</span>
+            <input class="input" type="text" name="totalFlour" id="totalFlour" readonly>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- container -->
+
+  <footer class="footer">
+    <div class="container">
+      <div class="text-center c-pointer">
+        <p class="m-0">COURTESY OF</p>
+        <a href="https://pizzaatyours.com" target="_blank">
+          <img src="assets/img/logo.png" alt="pizzaatyours logo">
+        </a>
+      </div>
+      <div class="copyright">
+        <small>&#169; Copyright 2019, pizza@yours.com All Rights Reserved</small>
+      </div>
+    </div>
+  </footer>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-      window.jQuery || document.write('<script src="assets/js/lib/jquery-3.3.1.min.js">\x3C/script>')
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    window.jQuery || document.write('<script src="assets/js/lib/jquery-3.3.1.min.js">\x3C/script>')
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous">
-    </script>
 
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    <script>
-      window.jQuery || document.write('<script src="assets/js/lib/bootstrap-4.3.1.min.js">\x3C/script>')
-    </script>
+  <script>
+    window.jQuery || document.write('<script src="assets/js/lib/bootstrap-4.3.1.min.js">\x3C/script>')
+  </script>
 
-    <script src="assets/js/app.js"></script>
-  </body>
+  <script src="assets/js/app.js"></script>
+</body>
+
 </html>
