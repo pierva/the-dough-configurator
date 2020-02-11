@@ -308,12 +308,32 @@ var octopus = {
     return model.calculated_receipe
   },
 
+
+  /**
+   * 
+   * @param {string} elemName Object key as used in elments object in model
+   * @param {string | int} newValue Value can be a string or number
+   * 
+   * @returns {boolean}
+   */
   updateElementValue: function(elemName, newValue) {
     if (elemName && newValue) {
       model.elements[elemName] = newValue
       return true
     }
     return false
+  },
+
+  /**
+   * 
+   * @param {array} names Array of keys for which the value should be set to 0 
+   */
+  resetCounters: function(names) {
+    $.each(names, function(idx, name) {
+      if(name in model.elements) {
+        model.elements[name] = 0
+      }
+    })
   }
  
  }
@@ -679,6 +699,15 @@ var counterView = {
 
       }
       return
+    })
+
+    $('#resetCounter').on('click', function(event) {
+      octopus.resetCounters(['counter', 'flour'])
+      $("[name='counter']").val(0)
+      $("[name='flour']").val(0)
+      // update localStorage
+      var elements = settingsView.getObjectProperties();
+      octopus.populateStorage(elements)
     })
   }
 }
