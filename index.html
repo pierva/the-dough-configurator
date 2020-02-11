@@ -301,8 +301,9 @@
       <div class="col-12">
         <h5 class="text-center mb-3">PIZZA COUNTER</h5>
         <div class="text-center mb-3">
-          <button type="button" name="addToCounter" class="btn btn-sm btn-outline-secondary">Add to counter</button>
-          <button type="button" name="setPrices" class="btn btn-sm btn-outline-secondary">Set prices</button>
+          <button type="button" id="addToCounter" class="btn btn-sm btn-outline-secondary">Add to counter</button>
+          <button type="button" id="setPrices" class="btn btn-sm btn-outline-secondary">Set prices</button>
+          <button type="button" id="resetCounter" class="btn btn-sm btn-outline-secondary">Reset</button>
         </div>
       </div>
       <div class="col-md-6">
@@ -312,7 +313,7 @@
           </label>
           <div class="col-6">
             <span class="inline-element">#</span>
-            <input class="input" type="text" name="totalPizzas" id="totalPizzas" readonly>
+            <input class="input" type="text" name="counter" id="totalPizzas" readonly>
           </div>
         </div>
       </div>
@@ -322,8 +323,8 @@
             Total Flour
           </label>
           <div class="col-6">
-            <span class="inline-element">kg</span>
-            <input class="input" type="text" name="totalFlour" id="totalFlour" readonly>
+            <span class="inline-element">gr</span>
+            <input class="input" type="text" name="flour" id="totalFlour" readonly>
           </div>
         </div>
       </div>

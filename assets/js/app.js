@@ -73,6 +73,14 @@ var model = {
       "name": "machine_type",
       "value": "spiral"
     },
+    {
+      "name": "counter",
+      "value": 0
+    },
+    {
+      "name": "flour",
+      "value": 0
+    }
   ],
   "default_motherYeast": 3,
   "default_freshYeast": 0.03,
@@ -86,7 +94,9 @@ var model = {
   "default_hands": 1,
   "default_tomatoes": 80,
   "default_mozzarella": 120,
-  "default_tomatoes_salt": 100
+  "default_tomatoes_salt": 100,
+
+  "calculated_receipe": {}
 }
 
 var octopus = {
@@ -94,6 +104,7 @@ var octopus = {
   init: function() {
     settingsView.init();
     waterTempView.init();
+    counterView.init();
   },
 
   // For local storage use
@@ -281,8 +292,31 @@ var octopus = {
     obj.mozzarella = model.default_mozzarella;
     obj.salt = model.default_tomatoes_salt;
     return obj;
+  },
+
+  /**
+   * 
+   * @param {Object} receipe Receipe is the object result of the calculate receipe function 
+   * 
+   * @returns {Object}
+   */
+  saveCalculatedReceipe: function(receipe) {
+    model.calculated_receipe = receipe
+  },
+
+  getCalculatedReceipe: function() {
+    return model.calculated_receipe
+  },
+
+  updateElementValue: function(elemName, newValue) {
+    if (elemName && newValue) {
+      model.elements[elemName] = newValue
+      return true
+    }
+    return false
   }
-}
+ 
+ }
 
 var settingsView = {
 
@@ -292,6 +326,7 @@ var settingsView = {
       event.preventDefault();
       var elements = settingsView.getObjectProperties();
       var receipe = settingsView.calculateReceipe(octopus.getModelElements());
+      octopus.saveCalculatedReceipe(receipe);
       toppingsView.updateQuantities(parseInt(receipe["balls_total"]));
       settingsView.validator();
       receipeView.render(receipe);
@@ -302,6 +337,7 @@ var settingsView = {
       event.preventDefault();
       var elements = settingsView.getObjectProperties();
       var receipe = settingsView.calculateReceipe(octopus.getModelElements());
+      octopus.saveCalculatedReceipe(receipe);
       toppingsView.updateQuantities(parseInt(receipe["balls_total"]));
       receipeView.render(receipe);
       octopus.populateStorage(elements);
@@ -502,6 +538,7 @@ var settingsView = {
     var settingsAvailable = octopus.getSavedSettings();
     if (settingsAvailable) {
       var receipe = this.calculateReceipe(octopus.getModelElements());
+      octopus.saveCalculatedReceipe(receipe)
       receipeView.render(receipe);
       waterTempView.updateWaterTemp();
       toppingsView.updateQuantities(parseInt(receipe["balls_total"]));
@@ -616,6 +653,33 @@ var toppingsView = {
     $('#tomatoes').text('--');
     $('#mozzarella').text('--');
     $('#saltQuantity').text('--');
+  }
+}
+
+var counterView = {
+  init: function() {
+    $('#addToCounter').on('click', function(event) {
+      var receipe = octopus.getCalculatedReceipe()
+      
+      if(!$.isEmptyObject(receipe)) {
+        var savedValues = octopus.getModelElements()
+        var savedCounter = savedValues.counter === "" ? 0 : parseInt(savedValues.counter)
+        var savedTotFlour = savedValues.flour === "" ? 0 : parseInt(savedValues.flour)
+        var newCounter = savedCounter + parseInt(receipe.balls_total)
+        var newTotFlour = savedTotFlour + parseInt(receipe.total_flour)
+        
+        $("[name='counter']").val(newCounter)
+        $("[name='flour']").val(newTotFlour)
+        octopus.updateElementValue('counter', newCounter)
+        octopus.updateElementValue('flour', newTotFlour)
+
+        // update localStorage
+        var elements = settingsView.getObjectProperties();
+        octopus.populateStorage(elements)
+
+      }
+      return
+    })
   }
 }
 
